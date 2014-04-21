@@ -18,8 +18,25 @@ public class Physics {
 	public static void move(Circle circle, double mouseX, double mouseY) {
 		double centerX = circle.getLayoutX();
 		double centerY = circle.getLayoutY();
-		circle.setLayoutX(centerX - mouseX);
-		circle.setLayoutY(centerY + mouseY);
+
+		double nextX = centerX - 2 * mouseX;
+		double nextY = centerY + 2 * mouseY;
+
+		if (nextX <= 1000 && nextX >= 0) {
+			circle.setLayoutX(centerX - mouseX);
+		} else if (nextX > 1000)
+			circle.setLayoutX(1000 - 1 * circle.getRadius());
+		else if (nextX < 0)
+			circle.setLayoutX(circle.getRadius());
+
+		if (nextY <= 500 && nextY >= 0) {
+			circle.setLayoutY(centerY + mouseY);
+		} else {
+			if (nextY > 500)
+				circle.setLayoutY(500 - 1 * circle.getRadius());
+			else if (nextY < 0)
+				circle.setLayoutY(circle.getRadius());
+		}
 	}
 
 }
