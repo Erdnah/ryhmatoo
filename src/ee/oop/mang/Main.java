@@ -18,6 +18,7 @@ public class Main extends Application {
 	Random rand = new Random();
 
 	//Wtf
+	//ÄRA SOKI BLÄT
 	
 	@Override
 	public void start(final Stage lava) {
