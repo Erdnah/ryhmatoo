@@ -16,27 +16,39 @@ public class Physics {
 	}
 
 	public static void move(Circle circle, double mouseX, double mouseY) {
+		
 		double centerX = circle.getLayoutX();
 		double centerY = circle.getLayoutY();
 
 		double nextX = centerX - 2 * mouseX;
 		double nextY = centerY + 2 * mouseY;
 
-		if (nextX <= 1000 && nextX >= 0) {
-			circle.setLayoutX(centerX - mouseX);
-		} else if (nextX > 1000)
-			circle.setLayoutX(1000 - 1 * circle.getRadius());
+		if (nextX <= Main.SCENE_X && nextX >= 0) {
+			circle.setLayoutX(centerX - 0.5*mouseX);
+		} else if (nextX > Main.SCENE_X)
+			circle.setLayoutX(Main.SCENE_X - 1 * circle.getRadius());
 		else if (nextX < 0)
 			circle.setLayoutX(circle.getRadius());
 
-		if (nextY <= 500 && nextY >= 0) {
-			circle.setLayoutY(centerY + mouseY);
+		if (nextY <= Main.SCENE_Y && nextY >= 0) {
+			circle.setLayoutY(centerY + 0.5*mouseY);
+			//tt.setFromY(centerY);
+			//tt.setToY(centerY + mouseY);
 		} else {
-			if (nextY > 500)
-				circle.setLayoutY(500 - 1 * circle.getRadius());
+			if (nextY > Main.SCENE_Y)
+				circle.setLayoutY(Main.SCENE_Y - 1 * circle.getRadius());
 			else if (nextY < 0)
 				circle.setLayoutY(circle.getRadius());
 		}
+		
+	}
+
+	public static void drag(Circle circle, double x, double y) {
+		if (x <= Main.SCENE_X - circle.getRadius()&& x > 0 + circle.getRadius())
+			circle.setLayoutX(x);
+		if (y <= Main.SCENE_Y - circle.getRadius() && y > 0 + circle.getRadius())
+			circle.setLayoutY(y);
+		
 	}
 
 }
