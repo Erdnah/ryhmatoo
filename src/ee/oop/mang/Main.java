@@ -9,19 +9,18 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
 	Random rand = new Random();
-	static double SCENE_X;
-	static double SCENE_Y;
+	static double SCENE_X = 800;
+	static double SCENE_Y = 600;
 	
 	@Override
 	public void start(final Stage lava) {
 		Group juur = new Group();
-		final Scene scene = new Scene(juur, 1000, 500);
+		final Scene scene = new Scene(juur, SCENE_X, SCENE_Y);
 		
 		final int radius = 30;
 		
@@ -50,14 +49,12 @@ public class Main extends Application {
 			/*circle.setOnMouseEntered(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					if (event.isPrimaryButtonDown()) {
-						System.out.println("omg");
-						Physics.move(circle, event.getX(), event.getY()*-1);
-					}
+					Physics.move(circle, event.getX(), event.getY()*-1);
 				}
 			});*/
 			juur.getChildren().add(circle);
 		}
+		lava.setTitle("Ballpit!");
 		lava.setScene(scene);
 		lava.show();
 	}
