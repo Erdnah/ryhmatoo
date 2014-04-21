@@ -9,8 +9,8 @@ public class Physics {
 	private static Random rand = new Random();
 
 	public static void setRandomXY(Circle circle) {
-		int x = rand.nextInt((int) (1000 - 2 * circle.getRadius()));
-		int y = rand.nextInt((int) (500 - 2 * circle.getRadius()));
+		int x = rand.nextInt((int) (Main.SCENE_X - 2 * circle.getRadius()));
+		int y = rand.nextInt((int) (Main.SCENE_Y - 2 * circle.getRadius()));
 		circle.setLayoutX(x + circle.getRadius());
 		circle.setLayoutY(y + circle.getRadius());
 	}
