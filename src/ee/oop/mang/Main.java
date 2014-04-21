@@ -17,6 +17,8 @@ public class Main extends Application {
 
 	Random rand = new Random();
 
+	//Wtf
+	
 	@Override
 	public void start(final Stage lava) {
 		Group juur = new Group();
