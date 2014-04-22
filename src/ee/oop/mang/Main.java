@@ -6,9 +6,11 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -18,11 +20,28 @@ public class Main extends Application {
 	static double SCENE_Y = 600;
 	static Color color = Color.YELLOW;
 	static int palle = 40; // MITU PALLI TAHAD?
+	int ulejoone = 0;
 	
 	@Override
 	public void start(final Stage lava) {
 		Group juur = new Group();
 		final Scene scene = new Scene(juur, SCENE_X, SCENE_Y);
+		Rectangle vasak1=new Rectangle(0,0,150,150);
+		vasak1.setFill(Color.GREEN);
+		Rectangle vasak2=new Rectangle(0,scene.getHeight()-150,150,150);
+		vasak2.setFill(Color.YELLOW);
+		Rectangle parem1=new Rectangle(scene.getWidth()-150,0,150,150);
+		parem1.setFill(Color.RED);
+		Rectangle parem2=new Rectangle(scene.getWidth()-150,scene.getHeight()-150,150,150);
+		parem2.setFill(Color.BLUE);
+		final Label skoor = new Label(String.valueOf(ulejoone));
+		skoor.setLayoutX(scene.getWidth()/2);
+		skoor.setLayoutY(0);
+		juur.getChildren().add(skoor);
+		juur.getChildren().add(vasak1);
+		juur.getChildren().add(vasak2);
+		juur.getChildren().add(parem1);
+		juur.getChildren().add(parem2);
 		
 		final int radius = 30;
 		
