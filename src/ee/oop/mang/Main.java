@@ -16,6 +16,8 @@ public class Main extends Application {
 	Random rand = new Random();
 	static double SCENE_X = 800;
 	static double SCENE_Y = 600;
+	static Color color = Color.YELLOW;
+	static int palle = 40; // MITU PALLI TAHAD?
 	
 	@Override
 	public void start(final Stage lava) {
@@ -24,17 +26,22 @@ public class Main extends Application {
 		
 		final int radius = 30;
 		
-		for (int i = 0; i < 40; i++) {
-			final Circle circle = new Circle(radius);
+		for (int i = 1; i < palle + 1; i++) {
+			final Circle circle = new Circle(radius, color);
 			Physics.setRandomXY(circle);
-			if (i < 10)
-				circle.setFill(Color.RED);
-			else if (i > 10 && i < 20)
-				circle.setFill(Color.GREEN);
-			else if (i > 20 && i< 30)
-				circle.setFill(Color.BLUE);
-			else
-				circle.setFill(Color.YELLOW);
+			
+			if (i % (palle/4) == 0) {
+				if (circle.getFill() == Color.YELLOW) {
+					color = Color.RED;
+					System.out.println("red");
+				} else if (circle.getFill() == Color.RED) {
+					System.out.println("green");
+					color = Color.GREEN;
+				} else if (circle.getFill() == Color.GREEN) {
+					System.out.println("blue");
+					color = Color.BLUE;
+				}
+			}
 			circle.setStroke(Color.BLACK);
 			circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
@@ -42,7 +49,6 @@ public class Main extends Application {
 				public void handle(MouseEvent event) {
 					SCENE_X = scene.getWidth();
 					SCENE_Y = scene.getHeight();
-					//System.out.println(scene.getHeight());
 					Physics.drag(circle, event.getSceneX(), event.getSceneY());
 				}
 			});
