@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="ASCII"?>
 <anttasks:AntTask xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:anttasks="http://org.eclipse.fx.ide.jdt/1.0" buildDirectory="${project}/build">
   <deploy>
+<<<<<<< HEAD
     <application name="ryhmatoo"/>
+=======
+    <application name="mang"/>
+>>>>>>> e67b4411253b4606ba48a12ee324a694aedab6a0
     <info/>
   </deploy>
   <signjar/>
