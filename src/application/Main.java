@@ -27,7 +27,7 @@ public class Main extends Application {
 	static double SCENE_X = 800;
 	static double SCENE_Y = 600;
 	static Color color = Color.YELLOW;
-	static int palle = 20; // MITU PALLI TAHAD?
+	static int palle = 4; // MITU PALLI TAHAD?
 	int ulejoone = 0;
 
 	// See meetod kontrollib,kas antud ring asub väljaspool kaste
@@ -64,6 +64,8 @@ public class Main extends Application {
 		final Scene algus = new Scene(juur2, 220, 100);
 		final Scene lõpp = new Scene(juur3, 350, 75);
 		final Label tekst = new Label();
+		final Stage mangulava = new Stage();
+		
 		Label ylesanne = new Label("Ülesanne on " + palle
 				+ " palli ajada kastidesse. \n Väljumiseks mängu ajal vajuta Esc.");
 		juur3.getChildren().add(tekst);
@@ -74,10 +76,12 @@ public class Main extends Application {
 		juur2.setBottom(start);
 		juur2.setCenter(arv);
 		final Scene scene = new Scene(juur, SCENE_X, SCENE_Y);
+		mangulava.setScene(scene);
 		// Anname start nupule tegevuse
 		start.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				lava.setScene(scene);
+				mangulava.show();
+				lava.close();
 				stopWatch.start();
 			}
 
@@ -150,11 +154,13 @@ public class Main extends Application {
 									// 3. stseen
 									if (ulejoone == palle) {
 										stopWatch.stop();
+										mangulava.close();
 										tekst.setText("Tubli " + arv.getText()
 												+ "! Sinu aeg oli: "
 												+ stopWatch.getTime() / 1000
 												+ "Sekundit");
 										lava.setScene(lõpp);
+										lava.show();
 
 									}
 									// overridime sündmused,et ei saaks enam
@@ -183,6 +189,8 @@ public class Main extends Application {
 			public void handle(KeyEvent ke) {
 				if (ke.getCode() == KeyCode.ESCAPE) {
 					stopWatch.stop();
+					mangulava.close();
+					lava.show();
 					tekst.setText("Kahjuks mäng sai läbi, " + arv.getText()
 							+ "! Sinu aeg oli: "
 							+ stopWatch.getTime() / 1000
