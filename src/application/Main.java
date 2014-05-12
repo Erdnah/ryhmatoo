@@ -1,10 +1,13 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +17,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -25,30 +30,31 @@ public class Main extends Application {
 	static int SCENE_X = 800;
 	static int SCENE_Y = 600;
 	static Color color = Color.YELLOW;
-	static int palle = 40; // MITU PALLI TAHAD?
+	static int palle = 4; // MITU PALLI TAHAD?
 	final int radius = 30;
 	int ulejoone = 0;
 	long startTime = 0;
-	//Tere tulemast
+
+	ArrayList<Circle> seesPallid = new ArrayList<Circle>();
+	
+	// Tere tulemast
 	// See meetod kontrollib,kas antud ring asub väljaspool kaste
 	public boolean kasVäljas(Circle circle) {
 		if (circle.getLayoutX() < 125 && circle.getLayoutY() < 125
 				&& circle.getFill() == Color.GREEN) {
 
 			return false;
-		}
-		else if (circle.getLayoutX() > SCENE_X - 125 && circle.getLayoutY() < 125
-				&& circle.getFill() == Color.RED) {
+		} else if (circle.getLayoutX() > SCENE_X - 125
+				&& circle.getLayoutY() < 125 && circle.getFill() == Color.RED) {
 
 			return false;
-		}
-		else if (circle.getLayoutX() > SCENE_X - 125
+		} else if (circle.getLayoutX() > SCENE_X - 125
 				&& circle.getLayoutY() > SCENE_Y - 125
 				&& circle.getFill() == Color.BLUE) {
 
 			return false;
-		}
-		else if (circle.getLayoutX() < 125 && circle.getLayoutY() > SCENE_Y - 125
+		} else if (circle.getLayoutX() < 125
+				&& circle.getLayoutY() > SCENE_Y - 125
 				&& circle.getFill() == Color.YELLOW) {
 
 			return false;
@@ -60,20 +66,43 @@ public class Main extends Application {
 	public void start(final Stage alguslava) {
 		Group juur = new Group();
 		BorderPane juur2 = new BorderPane();
-		Group juur3 = new Group();
-		final Scene algus = new Scene(juur2, 220, 100);
-		final Scene lõpp = new Scene(juur3, 350, 75);
+		BorderPane juur3 = new BorderPane();
+		final Scene algus = new Scene(juur2, 260, 150);
+		final Scene lõpp = new Scene(juur3, 370, 90);
 		final Label tekst = new Label();
 		final Stage mangulava = new Stage();
 		mangulava.setResizable(false);
-		
-		Label ylesanne = new Label("Ülesanne on " + palle
-				+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc.");
-		juur3.getChildren().add(tekst);
+
+		Label ylesanne = new Label(
+				"Ülesanne on "
+						+ palle
+						+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc.");
+
+		HBox hb1 = new HBox();
+		HBox hb2 = new HBox();
+		VBox vb1 = new VBox();
+		hb1.setPadding(new Insets(10));
+		hb2.setPadding(new Insets(10));
+		vb1.setSpacing(10);
+		vb1.setPadding(new Insets(10));
+		hb1.getChildren().add(ylesanne);
+		vb1.getChildren().add(tekst);
+
+		juur3.setCenter(vb1);
 		Button start = new Button("Alusta");
+		Button lopp = new Button("Lõpeta");
+		vb1.getChildren().add(lopp);
+		lopp.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Platform.exit();
+			}
+		});
 		final TextField arv = new TextField("Sisesta enda nimi");
-		juur2.setTop(ylesanne);
-		juur2.setBottom(start);
+		hb2.getChildren().add(start);
+		juur2.setTop(hb1);
+		juur2.setBottom(hb2);
 		juur2.setCenter(arv);
 		final Scene scene = new Scene(juur, SCENE_X, SCENE_Y);
 		mangulava.setScene(scene);
@@ -129,53 +158,43 @@ public class Main extends Application {
 			}
 			// Lisame ringidele äärised
 			circle.setStroke(Color.BLACK);
-			// Kontrollime,kas loodud ring pole juba kasti sees, kui on,siis ei
-			// lase liigutada ja lisame skoorile +1
-			if (kasVäljas(circle)) {
-				// Lisame võimaluse ringe lohistada
-				circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			// Lisame võimaluse ringe lohistada
+			circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
+				
+				@Override
+				public void handle(MouseEvent event) {
+					Physics.drag(circle, event.getSceneX(),
+								event.getSceneY());					
+				}
 
-					@Override
-					public void handle(MouseEvent event) {
-						// Kontrollime,kas ikka on kastidest väljas
-						if (kasVäljas(circle)) {
-							Physics.drag(circle, event.getSceneX(),
-									event.getSceneY());
-						} else {
-							circle.setOnMouseReleased(new EventHandler<MouseEvent>() {
-								public void handle(MouseEvent me) {
-									ulejoone++;
-									skoor.setText(String.valueOf(ulejoone));
-									// Kui skoor on võrdne pallide arvuga,on
-									// järelikult kõik pallid sees ja tuleb ette
-									// 3. stseen
-									if (ulejoone == palle) {
-										mangulava.close();
-										tekst.setText("Tubli " + arv.getText()
-												+ "!\nSa suutsid " + palle + " palli "
-												+ ((System.currentTimeMillis() - startTime) / 1000)
-												+ " sekundiga kastidesse paigutada.");
-										alguslava.setScene(lõpp);
-										alguslava.show();
+			});
+			circle.setOnMouseReleased(new EventHandler<MouseEvent>() {
 
-									}
-									// overridime sündmused,et ei saaks enam
-									// klõpsata ega skoori juurde lisada
-									circle.setOnMouseReleased(new TyhiEvent());
-									circle.setOnMouseDragged(new TyhiEvent());
-								}
-							});
-
+				@Override
+				public void handle(MouseEvent event) {
+					if (!kasVäljas(circle) && !seesPallid.contains(circle)) {
+						seesPallid.add(circle);
+					} else {
+						if (seesPallid.contains(circle) && kasVäljas(circle)) {
+							seesPallid.remove(seesPallid.indexOf(circle));
 						}
-
 					}
-
-				});
-
-			}
+					skoor.setText("" + seesPallid.size());
+					if (seesPallid.size() == palle) {
+						mangulava.close();
+						alguslava.show();
+						tekst.setText("Tubli, " + arv.getText()
+								+ "! Suutsid "
+								+ ((System.currentTimeMillis() - startTime) / 1000)
+								+ " sekundiga \najada " + skoor.getText()
+								+ " palli kastidesse.");
+						alguslava.setScene(lõpp);
+					}
+				}
+			});
 			juur.getChildren().add(circle);
 		}
-		//Lisame võimaluse ESCAPEga sulgeda mangulava
+		// Lisame võimaluse ESCAPEga sulgeda mangulava
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -185,7 +204,8 @@ public class Main extends Application {
 					tekst.setText("Kahjuks mäng sai läbi, " + arv.getText()
 							+ "! Sinu aeg oli: "
 							+ ((System.currentTimeMillis() - startTime) / 1000)
-							+ " sekundit \nja sa said "+ skoor.getText() + " palli ajada kastidesse.");
+							+ " sekundit \nja sa said " + skoor.getText()
+							+ " palli ajada kastidesse.");
 					alguslava.setScene(lõpp);
 
 				}
