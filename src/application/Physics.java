@@ -9,10 +9,10 @@ public class Physics {
 	private static Random rand = new Random();
 	//Selle meetodiga saab suvaliselt anda ringile spawnpoint
 	public static void setRandomXY(Circle circle) {
-		int x = rand.nextInt((int) (Main.SCENE_X - 2 * circle.getRadius()));
-		int y = rand.nextInt((int) (Main.SCENE_Y - 2 * circle.getRadius()));
-		circle.setLayoutX(x + circle.getRadius());
-		circle.setLayoutY(y + circle.getRadius());
+		double x = 150 + circle.getRadius() + rand.nextInt((int) (Main.SCENE_X - 2*150-circle.getRadius()));
+		double y = 150 + circle.getRadius() + rand.nextInt((int) (Main.SCENE_Y - 2*150-circle.getRadius()));
+		circle.setLayoutX(x);
+		circle.setLayoutY(y);
 	}
 	//See on teine võimalus ringe liigutada,aga antud hetkel ei kasuta
 	public static void move(Circle circle, double mouseX, double mouseY) {
