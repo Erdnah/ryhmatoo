@@ -29,7 +29,7 @@ public class Main extends Application {
 	static Color color = Color.YELLOW;
 	static int palle = 4; // MITU PALLI TAHAD?
 	int ulejoone = 0;
-
+	//Tere tulemast
 	// See meetod kontrollib,kas antud ring asub väljaspool kaste
 	public boolean kasväljas(Circle circle) {
 		if (circle.getLayoutX() < 125 && circle.getLayoutY() < 125
