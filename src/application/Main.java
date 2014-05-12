@@ -58,7 +58,7 @@ public class Main extends Application {
 		BorderPane juur = new BorderPane();
 		final Scene algus = new Scene(juur, 260, 150);
 
-		Label ylesanne = new Label(
+		final Label ylesanne = new Label(
 				"Ülesanne on "
 						+ palle
 						+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc.");
@@ -79,15 +79,26 @@ public class Main extends Application {
 					Kontroll(arv.getText());
 				}
 				catch(LiigaLühikeNimiErind e){
+					ylesanne.setText("Ülesanne on "
+						+ palle
+						+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
+						+ "\n Sisesta palun pikem nimi!");
 					System.out.println(e.getMessage());
 				}
 				catch(LiigaPikkNimiErind t){
+					ylesanne.setText("Ülesanne on "
+							+ palle
+							+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
+							+ "\n Sisesta palun lühem nimi!");
 					System.out.println(t.getMessage());
 				}
+				if(arv.getText().length()>3&&arv.getText().length()<30){
 				ManguLava mangulava = new ManguLava();
 				mangulava.init();
 				startTime = System.currentTimeMillis();
 				alguslava.close();
+				}
+				
 			}
 
 		});
