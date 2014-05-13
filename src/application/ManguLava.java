@@ -1,5 +1,6 @@
 package application;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
@@ -18,10 +19,24 @@ public class ManguLava extends Stage {
 
 	static final Label tekst = new Label();
 	private ArrayList<Circle> seesPallid = new ArrayList<Circle>();
-	private Label skoor = new Label("0");
+	public static Label skoor = new Label("0");
 	private Group juur = new Group();
+	private static long tulemus;
 	final Scene scene = new Scene(juur, Main.SCENE_X, Main.SCENE_Y);
 	
+	
+	static public long getTulemus() {
+		return tulemus;
+	}
+
+	
+
+	public static void setTulemus(long tulemus) {
+		ManguLava.tulemus = tulemus;
+	}
+
+
+
 	public void init() {
 		setScene(scene);
 		// Loome vastavad kastid nurkadessse
@@ -91,11 +106,19 @@ public class ManguLava extends Stage {
 					if (seesPallid.size() == Main.palle) {
 						close();
 						LopuLava lopulava = new LopuLava();
+						long lõpp=((System.currentTimeMillis() - Main.startTime) / 1000);
+						ManguLava.setTulemus(lõpp);
+						try {
+							Highscore.init();
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						lopulava.init();
 						tekst.setText("Tubli, "
 								+ Main.getNimi()
 								+ "! Suutsid "
-								+ ((System.currentTimeMillis() - Main.startTime) / 1000)
+								+ lõpp
 								+ " sekundiga \najada " + skoor.getText()
 								+ " palli kastidesse.");
 					}
@@ -110,11 +133,13 @@ public class ManguLava extends Stage {
 				if (ke.getCode() == KeyCode.ESCAPE) {
 					close();
 					LopuLava lopulava = new LopuLava();
+					long lõpp=((System.currentTimeMillis() - Main.startTime) / 1000);
+					ManguLava.setTulemus(lõpp);
 					lopulava.init();
 					tekst.setText("Kahjuks mäng sai läbi, "
 							+ Main.getNimi()
 							+ "! Sinu aeg oli: "
-							+ ((System.currentTimeMillis() - Main.startTime) / 1000)
+							+ lõpp
 							+ " sekundit \nja sa said " + skoor.getText()
 							+ " palli ajada kastidesse.");
 
@@ -128,21 +153,21 @@ public class ManguLava extends Stage {
 	// Tere tulemast
 	// See meetod kontrollib,kas antud ring asub väljaspool kaste
 	public boolean kasVäljas(Circle circle) {
-		if (circle.getLayoutX() < 125 && circle.getLayoutY() < 125
+		if (circle.getLayoutX() < 130 && circle.getLayoutY() < 130
 				&& circle.getFill() == Color.GREEN) {
 
 			return false;
-		} else if (circle.getLayoutX() > Main.SCENE_X - 125
-				&& circle.getLayoutY() < 125 && circle.getFill() == Color.RED) {
+		} else if (circle.getLayoutX() > Main.SCENE_X - 130
+				&& circle.getLayoutY() < 130 && circle.getFill() == Color.RED) {
 
 			return false;
-		} else if (circle.getLayoutX() > Main.SCENE_X - 125
-				&& circle.getLayoutY() > Main.SCENE_Y - 125
+		} else if (circle.getLayoutX() > Main.SCENE_X - 130
+				&& circle.getLayoutY() > Main.SCENE_Y - 130
 				&& circle.getFill() == Color.BLUE) {
 
 			return false;
-		} else if (circle.getLayoutX() < 125
-				&& circle.getLayoutY() > Main.SCENE_Y - 125
+		} else if (circle.getLayoutX() < 130
+				&& circle.getLayoutY() > Main.SCENE_Y - 130
 				&& circle.getFill() == Color.YELLOW) {
 
 			return false;
