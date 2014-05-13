@@ -26,34 +26,36 @@ public class Main extends Application {
 	int ulejoone = 0;
 	static long startTime = 0;
 	static TextField arv = null;
-	
-	static class LiigaLühikeNimiErind extends Exception{
-		LiigaLühikeNimiErind(){
+
+	static class LiigaLühikeNimiErind extends Exception {
+		LiigaLühikeNimiErind() {
 			super();
 		}
-		LiigaLühikeNimiErind(String s){
+
+		LiigaLühikeNimiErind(String s) {
 			super(s);
 		}
 	}
-	static class LiigaPikkNimiErind extends Exception{
-		LiigaPikkNimiErind(){
+
+	static class LiigaPikkNimiErind extends Exception {
+		LiigaPikkNimiErind() {
 			super();
 		}
-		LiigaPikkNimiErind(String s){
+
+		LiigaPikkNimiErind(String s) {
 			super(s);
 		}
 	}
-	public void Kontroll(String nimi) throws LiigaLühikeNimiErind,LiigaPikkNimiErind{
-		if(nimi.length()<3){
+
+	public void Kontroll(String nimi) throws LiigaLühikeNimiErind,
+			LiigaPikkNimiErind {
+		if (nimi.length() < 3) {
 			throw new LiigaLühikeNimiErind("Liiga lühike nimi");
-		}
-		else if(nimi.length()>30){
-			throw new LiigaPikkNimiErind("Liiga pikk nimi");	
+		} else if (nimi.length() > 30) {
+			throw new LiigaPikkNimiErind("Liiga pikk nimi");
 		}
 	}
 
-
-	@Override
 	public void start(final Stage alguslava) {
 
 		BorderPane juur = new BorderPane();
@@ -70,45 +72,32 @@ public class Main extends Application {
 		hb1.setPadding(new Insets(10));
 		hb2.setPadding(new Insets(10));
 
-
-
 		Button start = new Button("Alusta");
 		// Anname start nupule tegevuse
 		start.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent event) {
-				try{
+				try {
 					Kontroll(arv.getText());
-				}
-				catch(LiigaLühikeNimiErind e){
-<<<<<<< HEAD
-					System.out.println(e.getMessage());
-				}
-				catch(LiigaPikkNimiErind t){
-					System.out.println(t.getMessage());
-				}
-=======
+				} catch (LiigaLühikeNimiErind e) {
 					ylesanne.setText("Ülesanne on "
-						+ palle
-						+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
-						+ "\n Sisesta palun pikem nimi!");
-					System.out.println(e.getMessage());
-				}
-				catch(LiigaPikkNimiErind t){
+							+ palle
+							+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
+							+ "\n Sisesta palun pikem nimi!");
+
+				} catch (LiigaPikkNimiErind t) {
 					ylesanne.setText("Ülesanne on "
 							+ palle
 							+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
 							+ "\n Sisesta palun lühem nimi!");
-					System.out.println(t.getMessage());
+					;
 				}
-				if(arv.getText().length()>3&&arv.getText().length()<30){
->>>>>>> d7ceb33e3fe90e70d9bc66bae1f12cfa114b3fcf
-				ManguLava mangulava = new ManguLava();
-				mangulava.init();
-				startTime = System.currentTimeMillis();
-				alguslava.close();
+				if (arv.getText().length() > 3 && arv.getText().length() < 30) {
+					ManguLava mangulava = new ManguLava();
+					mangulava.init();
+					startTime = System.currentTimeMillis();
+					alguslava.close();
 				}
-				
+
 			}
 
 		});
@@ -126,7 +115,7 @@ public class Main extends Application {
 		alguslava.show();
 	}
 
-	public static String getNimi () {
+	public static String getNimi() {
 		return arv.getText();
 	}
 

@@ -1,5 +1,4 @@
 package application;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,15 +9,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class LopuLava extends Stage {
-	
+public class LopuLava extends Stage  {
+
+
 	public void init() {
 		BorderPane juur = new BorderPane();
-		final Scene lõpp = new Scene(juur, 320, 90);
+		final Scene lõpp = new Scene(juur, 320, 250);
 		Button lopp = new Button("Lõpeta");
 		Button uuesti = new Button("Uuesti");
 		HBox hb3 = new HBox();
-		juur.setCenter(ManguLava.tekst);
+		juur.setTop(ManguLava.tekst);
+		juur.setCenter(Highscore.tabel);
 		juur.setBottom(hb3);
 		hb3.setSpacing(10);
 		hb3.setPadding(new Insets(10));
@@ -30,6 +31,12 @@ public class LopuLava extends Stage {
 				Platform.exit();
 			}
 		});
+
+
+
+
+
+
 		setTitle("Lõpp");
 		setScene(lõpp);
 		show();
