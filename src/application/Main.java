@@ -92,14 +92,14 @@ public class Main extends Application {
 						+ palle
 						+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
 						+ "\n Sisesta palun pikem nimi!");
-					
+					System.out.println(e.getMessage());
 				}
 				catch(LiigaPikkNimiErind t){
 					ylesanne.setText("Ülesanne on "
 							+ palle
 							+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
 							+ "\n Sisesta palun lühem nimi!");
-					;
+					System.out.println(t.getMessage());
 				}
 				if(arv.getText().length()>3&&arv.getText().length()<30){
 >>>>>>> d7ceb33e3fe90e70d9bc66bae1f12cfa114b3fcf
