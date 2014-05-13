@@ -26,8 +26,34 @@ public class Main extends Application {
 	int ulejoone = 0;
 	static long startTime = 0;
 	static TextField arv = null;
+	
+	static class LiigaLühikeNimiErind extends Exception{
+		LiigaLühikeNimiErind(){
+			super();
+		}
+		LiigaLühikeNimiErind(String s){
+			super(s);
+		}
+	}
+	static class LiigaPikkNimiErind extends Exception{
+		LiigaPikkNimiErind(){
+			super();
+		}
+		LiigaPikkNimiErind(String s){
+			super(s);
+		}
+	}
+	public void Kontroll(String nimi) throws LiigaLühikeNimiErind,LiigaPikkNimiErind{
+		if(nimi.length()<3){
+			throw new LiigaLühikeNimiErind("Liiga lühike nimi");
+		}
+		else if(nimi.length()>30){
+			throw new LiigaPikkNimiErind("Liiga pikk nimi");	
+		}
+	}
 
 
+	@Override
 	public void start(final Stage alguslava) {
 
 		BorderPane juur = new BorderPane();
@@ -40,16 +66,26 @@ public class Main extends Application {
 
 		HBox hb1 = new HBox();
 		HBox hb2 = new HBox();
-		
+
 		hb1.setPadding(new Insets(10));
 		hb2.setPadding(new Insets(10));
-		
 
-		
+
+
 		Button start = new Button("Alusta");
 		// Anname start nupule tegevuse
 		start.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
 			public void handle(ActionEvent event) {
+				try{
+					Kontroll(arv.getText());
+				}
+				catch(LiigaLühikeNimiErind e){
+					System.out.println(e.getMessage());
+				}
+				catch(LiigaPikkNimiErind t){
+					System.out.println(t.getMessage());
+				}
 				ManguLava mangulava = new ManguLava();
 				mangulava.init();
 				startTime = System.currentTimeMillis();
@@ -70,7 +106,7 @@ public class Main extends Application {
 		alguslava.setScene(algus);
 		alguslava.show();
 	}
-	
+
 	public static String getNimi () {
 		return arv.getText();
 	}
