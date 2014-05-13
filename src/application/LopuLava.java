@@ -24,6 +24,14 @@ public class LopuLava extends Stage  {
 		hb3.setSpacing(10);
 		hb3.setPadding(new Insets(10));
 		hb3.getChildren().addAll(uuesti, lopp);
+		uuesti.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				
+			}
+		});
 		lopp.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

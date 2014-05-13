@@ -24,18 +24,13 @@ public class ManguLava extends Stage {
 	private static long tulemus;
 	final Scene scene = new Scene(juur, Main.SCENE_X, Main.SCENE_Y);
 
-
 	static public long getTulemus() {
 		return tulemus;
 	}
 
-
-
 	public static void setTulemus(long tulemus) {
 		ManguLava.tulemus = tulemus;
 	}
-
-
 
 	public void init() {
 		setScene(scene);
@@ -106,8 +101,8 @@ public class ManguLava extends Stage {
 					if (seesPallid.size() == Main.palle) {
 						close();
 						LopuLava lopulava = new LopuLava();
-						long lõpp=((System.currentTimeMillis() - Main.startTime) / 1000);
-						ManguLava.setTulemus(lõpp);
+						long lopp = ((System.currentTimeMillis() - Main.startTime) / 1000);
+						ManguLava.setTulemus(lopp);
 						try {
 							Highscore.init();
 						} catch (FileNotFoundException e) {
@@ -115,12 +110,9 @@ public class ManguLava extends Stage {
 							e.printStackTrace();
 						}
 						lopulava.init();
-						tekst.setText("Tubli, "
-								+ Main.getNimi()
-								+ "! Suutsid "
-								+ lõpp
-								+ " sekundiga \najada " + skoor.getText()
-								+ " palli kastidesse.");
+						tekst.setText("Tubli, " + Main.getNimi() + "! Suutsid "
+								+ lopp + " sekundiga \najada "
+								+ skoor.getText() + " palli kastidesse.");
 					}
 				}
 			});
@@ -133,13 +125,11 @@ public class ManguLava extends Stage {
 				if (ke.getCode() == KeyCode.ESCAPE) {
 					close();
 					LopuLava lopulava = new LopuLava();
-					long lõpp=((System.currentTimeMillis() - Main.startTime) / 1000);
-					ManguLava.setTulemus(lõpp);
+					long lopp = ((System.currentTimeMillis() - Main.startTime) / 1000);
+					ManguLava.setTulemus(lopp);
 					lopulava.init();
-					tekst.setText("Kahjuks mäng sai läbi, "
-							+ Main.getNimi()
-							+ "! Sinu aeg oli: "
-							+ lõpp
+					tekst.setText("Kahjuks mäng sai läbi, " + Main.getNimi()
+							+ "! Sinu aeg oli: " + lopp
 							+ " sekundit \nja sa said " + skoor.getText()
 							+ " palli ajada kastidesse.");
 

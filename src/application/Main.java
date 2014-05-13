@@ -78,26 +78,25 @@ public class Main extends Application {
 			public void handle(ActionEvent event) {
 				try {
 					Kontroll(arv.getText());
+					ManguLava mangulava = new ManguLava();
+					mangulava.init();
+					startTime = System.currentTimeMillis();
+					alguslava.close();
 				} catch (LiigaLühikeNimiErind e) {
+					e.printStackTrace();
 					ylesanne.setText("Ülesanne on "
 							+ palle
 							+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
 							+ "\n Sisesta palun pikem nimi!");
 
 				} catch (LiigaPikkNimiErind t) {
+					t.printStackTrace();
 					ylesanne.setText("Ülesanne on "
 							+ palle
 							+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
 							+ "\n Sisesta palun lühem nimi!");
 					;
-				}
-				if (arv.getText().length() > 3 && arv.getText().length() < 30) {
-					ManguLava mangulava = new ManguLava();
-					mangulava.init();
-					startTime = System.currentTimeMillis();
-					alguslava.close();
-				}
-
+				}		
 			}
 
 		});
