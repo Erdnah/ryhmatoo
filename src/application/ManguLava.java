@@ -17,12 +17,14 @@ import javafx.stage.Stage;
 
 public class ManguLava extends Stage {
 
-	static final Label tekst = new Label();
+	static Label tekst = new Label();
 	private ArrayList<Circle> seesPallid = new ArrayList<Circle>();
 	public static Label skoor = new Label("0");
 	private Group juur = new Group();
 	private static long tulemus;
 	final Scene scene = new Scene(juur, Main.SCENE_X, Main.SCENE_Y);
+	
+
 
 	static public long getTulemus() {
 		return tulemus;

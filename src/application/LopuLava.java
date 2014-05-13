@@ -7,10 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class LopuLava extends Stage  {
-
 
 	public void init() {
 		BorderPane juur = new BorderPane();
@@ -28,8 +28,9 @@ public class LopuLava extends Stage  {
 
 			@Override
 			public void handle(ActionEvent event) {
-				
-				
+				Main.color = Color.YELLOW;
+				Main.showAlguslava();
+				close();
 			}
 		});
 		lopp.setOnAction(new EventHandler<ActionEvent>() {
@@ -39,11 +40,6 @@ public class LopuLava extends Stage  {
 				Platform.exit();
 			}
 		});
-
-
-
-
-
 
 		setTitle("Lõpp");
 		setScene(lõpp);

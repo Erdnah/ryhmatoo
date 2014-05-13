@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import javafx.scene.control.Label;
 
 public class Highscore {
-	public static ArrayList<String> temp = new ArrayList<String>();
-	static final Label tabel = new Label();
-	static String tekst = "Top 10\n";
+	
+	public static ArrayList<String> temp;
+	static Label tabel;
+	static String tekst;
 
 	public static int saaNumber(String rida) {
 		String[] jupid = rida.split(" ");
@@ -23,6 +24,9 @@ public class Highscore {
 
 	public static void init() throws FileNotFoundException {
 		try {
+			tekst = "Top 10\n";
+			temp = new ArrayList<String>();
+			tabel = new Label();
 			File file = new File("tulemus.txt");
 			if (!file.exists())
 				file.createNewFile();

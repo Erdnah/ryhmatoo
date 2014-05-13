@@ -6,12 +6,14 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -26,7 +28,9 @@ public class Main extends Application {
 	int ulejoone = 0;
 	static long startTime = 0;
 	static TextField arv = null;
+	static Stage alguslava;
 
+	@SuppressWarnings("serial")
 	static class LiigaLühikeNimiErind extends Exception {
 		LiigaLühikeNimiErind() {
 			super();
@@ -36,7 +40,7 @@ public class Main extends Application {
 			super(s);
 		}
 	}
-
+	@SuppressWarnings("serial")
 	static class LiigaPikkNimiErind extends Exception {
 		LiigaPikkNimiErind() {
 			super();
@@ -57,6 +61,8 @@ public class Main extends Application {
 	}
 
 	public void start(final Stage alguslava) {
+		
+		Main.alguslava = alguslava;
 
 		BorderPane juur = new BorderPane();
 		final Scene algus = new Scene(juur, 260, 150);
@@ -65,11 +71,13 @@ public class Main extends Application {
 				"Ülesanne on "
 						+ palle
 						+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc.");
+		final Label error = new Label();
+		error.setTextFill(Color.RED);
 
-		HBox hb1 = new HBox();
+		VBox vb1 = new VBox();
 		HBox hb2 = new HBox();
-
-		hb1.setPadding(new Insets(10));
+		vb1.setAlignment(Pos.CENTER);
+		vb1.setPadding(new Insets(10));
 		hb2.setPadding(new Insets(10));
 
 		Button start = new Button("Alusta");
@@ -84,18 +92,11 @@ public class Main extends Application {
 					alguslava.close();
 				} catch (LiigaLühikeNimiErind e) {
 					e.printStackTrace();
-					ylesanne.setText("Ülesanne on "
-							+ palle
-							+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
-							+ "\n Sisesta palun pikem nimi!");
+					error.setText("Sisesta palun pikem nimi!");
 
 				} catch (LiigaPikkNimiErind t) {
 					t.printStackTrace();
-					ylesanne.setText("Ülesanne on "
-							+ palle
-							+ " palli ajada kastidesse. \nVäljumiseks mängu ajal vajuta Esc."
-							+ "\n Sisesta palun lühem nimi!");
-					;
+					error.setText("Sisesta palun lühem nimi!");
 				}		
 			}
 
@@ -103,14 +104,18 @@ public class Main extends Application {
 
 		arv = new TextField("Sisesta enda nimi");
 		hb2.getChildren().add(start);
-		hb1.getChildren().add(ylesanne);
-		juur.setTop(hb1);
+		vb1.getChildren().addAll(ylesanne, error);
+		juur.setTop(vb1);
 		juur.setBottom(hb2);
 		juur.setCenter(arv);
 
 		alguslava.setResizable(true);
 		alguslava.setTitle("Ballpit!");
 		alguslava.setScene(algus);
+		alguslava.show();
+	}
+	
+	public static void showAlguslava () {
 		alguslava.show();
 	}
 
